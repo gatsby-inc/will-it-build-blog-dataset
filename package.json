@@ -33,7 +33,7 @@
   "license": "MIT",
   "scripts": {
     "build": "DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io/\" gatsby build",
-    "build-all": "DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io/\" gatsby build && DRUPAL_URL=\"https://dev-willitbuild02.pantheonsite.io/\" gatsby build &&DRUPAL_URL=\"https://dev-willitbuild03.pantheonsite.io/\" gatsby build &&DRUPAL_URL=\"https://dev-willitbuild04.pantheonsite.io/\" gatsby build",
+    "build-all": "DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io/\" gatsby build && DRUPAL_URL=\"https://dev-willitbuild02.pantheonsite.io/\" gatsby build && DRUPAL_URL=\"https://dev-willitbuild03.pantheonsite.io/\" gatsby build && DRUPAL_URL=\"https://dev-willitbuild04.pantheonsite.io/\" gatsby build",
     "develop": "DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io/\" gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
