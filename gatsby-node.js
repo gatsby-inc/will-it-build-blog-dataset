@@ -77,9 +77,12 @@ exports.createPages = async ({ graphql, reporter }) => {
   normalizedArticles.forEach(saveNodeToDisk)
 }
 
-exports.onPostBootstrap = () =>
+exports.onPostBuild = () =>
   fs.moveSync(`./public/static`, `${directoryPath}/static`, err => {
-    if (err) return console.error(err)
+    if (!err) {
+      console.log(`finished exporting ${pluginOptionsUrl} to ./json/!`)
+      return
+    }
 
-    console.log(`finished exporting ${pluginOptionsUrl} to ./json/!`)
+    console.error(err)
   })
