@@ -18,6 +18,27 @@ const saveNodeToDisk = node => {
 exports.createPages = async ({ graphql, reporter }) => {
   const result = await graphql(`
     {
+      images: allNodeArticle {
+        nodes {
+          field_image {
+            title
+          }
+          relationships {
+            field_image {
+              uri {
+                url
+              }
+              localFile {
+                childImageSharp {
+                  original {
+                    src
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       articles: allNodeArticle {
         nodes {
           drupal_id
@@ -54,7 +75,10 @@ exports.createPages = async ({ graphql, reporter }) => {
     reporter.panicOnBuild(result.errors)
   }
 
-  const normalizedArticles = result.data.articles.nodes.map(node => ({
+  const articles = result.data.articles.nodes
+  const images = result.data.images.nodes
+
+  const normalizedArticles = articles.map(node => ({
     id: node.drupal_id,
     path: kebabCase(node.title),
     title: node.title,
@@ -71,6 +95,48 @@ exports.createPages = async ({ graphql, reporter }) => {
         node.relationships.field_image.localFile.childImageSharp.original.src,
     },
   }))
+
+  const dedupedImageSrcs = new Set([
+    ...images
+      .map(article =>
+        article &&
+        article.relationships &&
+        article.relationships.field_image &&
+        article.relationships.field_image.localFile
+          ? article.relationships.field_image.localFile.childImageSharp.original
+              .src
+          : null
+      )
+      .filter(Boolean),
+  ])
+
+  const dedupedImageUrls = new Set([
+    ...images
+      .map(article =>
+        article &&
+        article.relationships &&
+        article.relationships.field_image &&
+        article.relationships.field_image.uri
+          ? article.relationships.field_image.uri.url
+          : null
+      )
+      .filter(Boolean),
+  ])
+
+  const dedupedImageTitles = new Set([
+    ...images
+      .map(article =>
+        article && article.field_image ? article.field_image.title : null
+      )
+      .filter(Boolean),
+  ])
+
+  console.log(dedupedImageSrcs.size)
+  console.log(dedupedImageUrls.size)
+  console.log(dedupedImageTitles.size)
+  console.log(images.length)
+  console.log([...dedupedImageSrcs])
+  console.log([...dedupedImageUrls])
 
   fs.emptyDirSync(directoryPath)
 
