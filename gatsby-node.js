@@ -1,6 +1,7 @@
 const kebabCase = require(`lodash.kebabcase`)
 const getSlug = require(`speakingurl`)
-const fs = require("fs-extra")
+const fs = require(`fs-extra`)
+const chunk = require(`lodash.chunk`)
 
 const pluginOptionsUrl = require(`./gatsby-config`).plugins.find(
   plugin => plugin.resolve === `gatsby-source-drupal`
@@ -8,11 +9,11 @@ const pluginOptionsUrl = require(`./gatsby-config`).plugins.find(
 
 const directoryPath = `./json/${getSlug(pluginOptionsUrl)}/`
 
-const saveNodeToDisk = node => {
-  const filePath = `${directoryPath}/articles/${node.id}.json`
+const saveNodesChunkToDisk = (chunk, index) => {
+  const filePath = `${directoryPath}/articles/${index}.json`
 
   fs.ensureFileSync(filePath)
-  fs.writeJSONSync(filePath, node)
+  fs.writeJSONSync(filePath, chunk)
 }
 
 exports.createPages = async ({ graphql, reporter }) => {
@@ -74,7 +75,9 @@ exports.createPages = async ({ graphql, reporter }) => {
 
   fs.emptyDirSync(directoryPath)
 
-  normalizedArticles.forEach(saveNodeToDisk)
+  const chunkedArticles = chunk(normalizedArticles, 500)
+
+  chunkedArticles.forEach(saveNodesChunkToDisk)
 }
 
 exports.onPostBuild = () =>
