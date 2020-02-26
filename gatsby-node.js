@@ -108,11 +108,4 @@ exports.createPages = async ({ graphql, reporter }) => {
 }
 
 exports.onPostBuild = () =>
-  fs.moveSync(`./public/static`, `${directoryPath}/static`, err => {
-    if (!err) {
-      console.log(`finished exporting ${pluginOptionsUrl} to ./json/!`)
-      return
-    }
-
-    console.error(err)
-  })
+  console.log(`finished exporting ${pluginOptionsUrl} to ./json/!`)
