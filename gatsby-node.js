@@ -92,6 +92,7 @@ exports.createPages = async ({ graphql, reporter }) => {
         fileMime: node.relationships.field_image.filemime,
         drupalUrl: process.env.DRUPAL_URL + drupalPath,
         staticPath: drupalPath.replace(`/sites/default/`, `../`),
+        staticFileName: drupalPath.split(`/`).pop(),
         localFileRelativePath:
           (((node.relationships || {}).field_image || {}).localFile || {})
             .relativePath || null,
