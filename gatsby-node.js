@@ -102,7 +102,7 @@ exports.createPages = async ({ graphql, reporter }) => {
 
   fs.emptyDirSync(directoryPath)
 
-  const chunkedArticles = chunk(normalizedArticles, 500)
+  const chunkedArticles = chunk(normalizedArticles, 2000)
 
   chunkedArticles.forEach(saveNodesChunkToDisk)
 }
