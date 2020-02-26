@@ -9,11 +9,30 @@ const pluginOptionsUrl = require(`./gatsby-config`).plugins.find(
 
 const directoryPath = `./json/${getSlug(pluginOptionsUrl)}/`
 
-const saveNodesChunkToDisk = (chunk, index) => {
+const saveNodesChunkToDisk = async (chunk, index) => {
   const filePath = `${directoryPath}/articles/${index}.json`
 
   fs.ensureFileSync(filePath)
   fs.writeJSONSync(filePath, chunk)
+
+  await Promise.all(
+    chunk.map(async article => {
+      if (
+        !article.image.staticPath ||
+        article.image.staticPath === `` ||
+        !article.image.localFileRelativePath
+      ) {
+        return
+      }
+
+      const imagePath = `${directoryPath}/${article.image.staticPath.replace(
+        `../`,
+        ``
+      )}`
+
+      await fs.copy(article.image.localFileRelativePath, imagePath)
+    })
+  )
 }
 
 exports.createPages = async ({ graphql, reporter }) => {
@@ -37,12 +56,11 @@ exports.createPages = async ({ graphql, reporter }) => {
             field_image {
               filename
               filemime
+              uri {
+                url
+              }
               localFile {
-                childImageSharp {
-                  original {
-                    src
-                  }
-                }
+                relativePath
               }
             }
           }
@@ -55,23 +73,32 @@ exports.createPages = async ({ graphql, reporter }) => {
     reporter.panicOnBuild(result.errors)
   }
 
-  const normalizedArticles = result.data.articles.nodes.map(node => ({
-    id: node.drupal_id,
-    path: kebabCase(node.title),
-    title: node.title,
-    date: node.created,
-    body: node.body.processed,
-    image: {
-      alt: node.field_image.alt,
-      title: node.field_image.title,
-      width: node.field_image.width,
-      height: node.field_image.height,
-      fileName: node.relationships.field_image.filename,
-      fileMime: node.relationships.field_image.filemime,
-      staticPath:
-        node.relationships.field_image.localFile.childImageSharp.original.src,
-    },
-  }))
+  const normalizedArticles = result.data.articles.nodes.map(node => {
+    const drupalPath =
+      (((node.relationships || {}).field_image || {}).uri || {}).url || ``
+
+    return {
+      id: node.drupal_id,
+      path: kebabCase(node.title),
+      title: node.title,
+      date: node.created,
+      body: node.body.processed,
+      image: {
+        alt: node.field_image.alt,
+        title: node.field_image.title,
+        width: node.field_image.width,
+        height: node.field_image.height,
+        fileName: node.relationships.field_image.filename,
+        fileMime: node.relationships.field_image.filemime,
+        drupalUrl: process.env.DRUPAL_URL + drupalPath,
+        staticPath: drupalPath.replace(`/sites/default/`, `../`),
+        localFileRelativePath:
+          (((node.relationships || {}).field_image || {}).localFile || {})
+            .relativePath || null,
+        googleCloudUrl: (node.field_public_image_url || {}).uri,
+      },
+    }
+  })
 
   fs.emptyDirSync(directoryPath)
 
