@@ -40,6 +40,7 @@ exports.createPages = async ({ graphql, reporter }) => {
     {
       articles: allNodeArticle {
         nodes {
+          id
           drupal_id
           title
           created
@@ -59,8 +60,10 @@ exports.createPages = async ({ graphql, reporter }) => {
               uri {
                 url
               }
+              drupal_id
               localFile {
                 relativePath
+                id
               }
             }
           }
@@ -71,6 +74,46 @@ exports.createPages = async ({ graphql, reporter }) => {
 
   if (result.errors) {
     reporter.panicOnBuild(result.errors)
+  }
+
+  // find corrupt images
+  for (const node of result.data.articles.nodes) {
+    const result = await graphql(`
+          {
+            nodeArticle(id: { eq: "${node.id}" }) {
+              relationships {
+                field_image {
+                  localFile {
+                    childImageSharp {
+                      fluid(maxWidth: 256) {
+                        src
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+      `)
+
+    if (result.errors) {
+      result.errors.forEach(error => reporter.error(error.message))
+
+      reporter.info(`Gatsby nodeArticle id: ${node.id}`)
+      reporter.info(`Drupal Article id: ${node.drupal_id}`)
+
+      reporter.info(
+        `Drupal Image id: ${node.relationships.field_image.drupal_id}`
+      )
+
+      if (node.relationships.field_image.uri) {
+        reporter.info(
+          `Drupal Image url: ${node.relationships.field_image.uri.url}`
+        )
+      }
+
+      reporter.log(`\n\n\n`)
+    }
   }
 
   const normalizedArticles = result.data.articles.nodes.map(node => {
