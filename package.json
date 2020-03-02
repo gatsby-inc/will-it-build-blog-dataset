@@ -34,8 +34,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "cross-env DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io\" gatsby build",
-    "build-all": "cross-env DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io\" gatsby build && cross-env DRUPAL_URL=\"https://dev-willitbuild02.pantheonsite.io\" gatsby build && cross-env DRUPAL_URL=\"https://dev-willitbuild03.pantheonsite.io\" gatsby build && cross-env DRUPAL_URL=\"https://dev-willitbuild04.pantheonsite.io\" gatsby build",
+    "build": "gatsby clean && cross-env DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io\" gatsby build",
+    "build-all": "gatsby clean && cross-env DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io\" gatsby build && cross-env DRUPAL_URL=\"https://dev-willitbuild02.pantheonsite.io\" gatsby build && cross-env DRUPAL_URL=\"https://dev-willitbuild03.pantheonsite.io\" gatsby build && cross-env DRUPAL_URL=\"https://dev-willitbuild04.pantheonsite.io\" gatsby build",
     "develop": "cross-env DRUPAL_URL=\"https://dev-willitbuild01.pantheonsite.io\" gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
