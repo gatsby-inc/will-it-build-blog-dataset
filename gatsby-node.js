@@ -35,6 +35,12 @@ const saveNodesChunkToDisk = async (chunk, index) => {
   )
 }
 
+exports.onPreInit = ({ reporter }) =>
+  reporter.log(`Exporting ${pluginOptionsUrl} to ./json/`)
+
+exports.onPostBuild = ({ reporter }) =>
+  reporter.log(`Finished exporting ${pluginOptionsUrl} to ./json/`)
+
 exports.createPages = async ({ graphql, reporter }) => {
   const result = await graphql(`
     {
@@ -150,6 +156,3 @@ exports.createPages = async ({ graphql, reporter }) => {
 
   chunkedArticles.forEach(saveNodesChunkToDisk)
 }
-
-exports.onPostBuild = () =>
-  console.log(`finished exporting ${pluginOptionsUrl} to ./json/!`)
