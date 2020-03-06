@@ -83,8 +83,9 @@ exports.createPages = async ({ graphql, reporter }) => {
   }
 
   // find corrupt images
-  for (const node of result.data.articles.nodes) {
-    const result = await graphql(`
+  if (!process.env.SKIP_VALIDATING_IMAGES) {
+    for (const node of result.data.articles.nodes) {
+      const result = await graphql(`
           {
             nodeArticle(id: { eq: "${node.id}" }) {
               relationships {
@@ -102,23 +103,24 @@ exports.createPages = async ({ graphql, reporter }) => {
           }
       `)
 
-    if (result.errors) {
-      result.errors.forEach(error => reporter.error(error.message))
+      if (result.errors) {
+        result.errors.forEach(error => reporter.error(error.message))
 
-      reporter.info(`Gatsby nodeArticle id: ${node.id}`)
-      reporter.info(`Drupal Article id: ${node.drupal_id}`)
+        reporter.info(`Gatsby nodeArticle id: ${node.id}`)
+        reporter.info(`Drupal Article id: ${node.drupal_id}`)
 
-      reporter.info(
-        `Drupal Image id: ${node.relationships.field_image.drupal_id}`
-      )
-
-      if (node.relationships.field_image.uri) {
         reporter.info(
-          `Drupal Image url: ${node.relationships.field_image.uri.url}`
+          `Drupal Image id: ${node.relationships.field_image.drupal_id}`
         )
-      }
 
-      reporter.log(`\n\n\n`)
+        if (node.relationships.field_image.uri) {
+          reporter.info(
+            `Drupal Image url: ${node.relationships.field_image.uri.url}`
+          )
+        }
+
+        reporter.log(`\n\n\n`)
+      }
     }
   }
 
