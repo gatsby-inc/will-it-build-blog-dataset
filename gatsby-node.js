@@ -59,6 +59,9 @@ exports.createPages = async ({ graphql, reporter }) => {
             width
             height
           }
+          field_public_image_url {
+            uri
+          }
           relationships {
             field_image {
               filename
