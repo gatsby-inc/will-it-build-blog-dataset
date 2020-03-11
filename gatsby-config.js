@@ -1,17 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby-Drupal WillItBuild exporter`,
-    description: `Pulls data from Drupal and exports it to JSON`,
-    author: `@gatsbyjs`,
+    description: `Generates and exports dummy data as JSON to be used for will it build`,
+    author: `@gatsbyjs, Tyler Barnes`,
   },
-  plugins: [
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-    {
-      resolve: `gatsby-source-drupal`,
-      options: {
-        baseUrl: process.env.DRUPAL_URL,
-      },
-    },
-  ],
+  plugins: [],
 }
