@@ -1,7 +1,8 @@
 # Will it build Drupal blog export
 
-This Gatsby site pulls data from `gatsby-source-drupal` and writes it to disk as JSON files.
+This Gatsby site uses a local plugin (`plugins/gatsby-plugin-generate-data`) to generate mass amounts of dummy data for use in testing.
 
-Images are pulled to validate that they don't cause Sharp/Vips errors but they're gitignored due to how big this repo would become with images. If you need images, re-export the sites locally.
+Images are taken from the open-image-dataset-v6. Any images over 5mb are discarded, the remaining image URL's are checked to ensure the image still exists.
 
-To re-export all sites run `yarn build-all`
+To regenerate all data sets, run `gatsby build`.
+To regenerate a single dataset, add this plugin option to gatsby-config `generateSingleSet:`willitbuild-0X`,`
