@@ -43,11 +43,10 @@ exports.getImageDataset = async ({
                 )
 
                 if (!isImage) {
-                  console.log(url)
                   resolve(false)
                 }
 
-                return resolve({ url, size, id })
+                resolve({ url, size, id })
               }
             )
             request.end()

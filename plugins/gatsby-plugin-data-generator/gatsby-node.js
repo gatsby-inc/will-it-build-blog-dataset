@@ -1,4 +1,5 @@
 const { generateArticles } = require(`./utils/generate`)
+const { writeDataToDisk } = require(`./utils/write`)
 
 exports.sourceNodes = async (helpers, pluginOptions) => {
   const { sets, generateSingleSet } = pluginOptions
@@ -18,11 +19,9 @@ exports.sourceNodes = async (helpers, pluginOptions) => {
     return
   }
 
-  const dataSets = {}
-
   for (const actionableSet of actionableSets) {
-    const [name, dataSet] = await generateArticles(actionableSet)
+    const [name, data] = await generateArticles(actionableSet)
 
-    dataSets[name] = dataSet
+    await writeDataToDisk({ name, data })
   }
 }
