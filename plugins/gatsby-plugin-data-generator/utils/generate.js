@@ -1,37 +1,33 @@
 const faker = require(`faker`)
 
-const { getImageDataset } = require(`./get-image-dataset`)
-
 exports.generateArticles = async ({
-  name: datasetName,
-  articles: numberOfArticles,
+  imageDataSet,
+  chunksPerFile,
+  articleCount,
+  offset = 0,
 }) => {
-  const imageDataSet = await getImageDataset({
-    count: numberOfArticles,
-  })
-
   const articles = []
 
   for (
-    let articleNumber = 1;
-    articleNumber <= numberOfArticles;
+    let articleNumber = 0 + offset;
+    articleNumber <= offset + chunksPerFile - 1 && articleNumber < articleCount;
     articleNumber++
   ) {
     const image = {
       // to account for that some of our images url's no longer existed
       // if there is no image for this article
-      ...(imageDataSet[articleNumber - 1]
-        ? imageDataSet[articleNumber - 1]
+      ...(imageDataSet[articleNumber]
+        ? imageDataSet[articleNumber]
         : // use another image from earlier in the array
-          imageDataSet[articleNumber - imageDataSet.length + 1]),
+          imageDataSet[articleNumber - imageDataSet.length]),
     }
 
-    const title = faker.random.words(Math.floor(Math.random() * 7) + 3)
+    const title = faker.random.words(Math.floor(Math.random() * 5) + 3)
 
     const content = faker.random.words(500)
 
     const article = {
-      articleNumber,
+      articleNumber: articleNumber + 1,
       title,
       content,
       image,
@@ -40,5 +36,5 @@ exports.generateArticles = async ({
     articles.push(article)
   }
 
-  return [datasetName, articles]
+  return articles
 }

@@ -1,40 +1,43 @@
 const fs = require(`fs-extra`)
-const chunk = require(`lodash.chunk`)
+const sampleSize = require(`lodash.samplesize`)
 
-const saveNodesChunkToDisk = async ({ chunk, index, directoryPath }) => {
-  const filePath = `${directoryPath}/articles/${index}.json`
+const { generateArticles } = require(`./generate`)
+const fullImageDataset = require(`../open-image-dataset-v6/json/0.json`)
 
-  fs.ensureFileSync(filePath)
-  fs.writeJSONSync(filePath, chunk)
+const arrayOfAscendingNumbers = times =>
+  Array.from(new Array(times), (_, index) => index)
 
-  await Promise.all(
-    chunk.map(async article => {
-      if (
-        !article.image.staticPath ||
-        article.image.staticPath === `` ||
-        !article.image.localFileRelativePath
-      ) {
-        return
-      }
+exports.generateArticlesAndWriteToDisk = async ({
+  actionableSet,
+  activity,
+  reporter,
+  chunksPerFile = 5000,
+}) => {
+  const { articles } = actionableSet
 
-      const imagePath = `${directoryPath}/${article.image.staticPath.replace(
-        `../`,
-        ``
-      )}`
+  const imageDataSet = sampleSize(fullImageDataset, articles)
 
-      await fs.copy(article.image.localFileRelativePath, imagePath)
-    })
-  )
-}
+  const numberOfFiles = Math.ceil(articles / chunksPerFile)
+  const fileIndexes = arrayOfAscendingNumbers(numberOfFiles)
 
-exports.writeDataToDisk = ({ name, data }) => {
-  const directoryPath = `data/${name}`
+  const directoryPath = `data/${actionableSet.name}`
 
   fs.emptyDirSync(directoryPath)
 
-  const chunkedArticles = chunk(data, 2000)
+  for (const index of fileIndexes) {
+    activity.setStatus(`writing ${index + 1}/${numberOfFiles} json files`)
 
-  chunkedArticles.forEach((chunk, index) =>
-    saveNodesChunkToDisk({ chunk, index, directoryPath })
-  )
+    const data = await generateArticles({
+      imageDataSet,
+      chunksPerFile,
+      articleCount: articles,
+      offset: chunksPerFile * index,
+      reporter,
+    })
+
+    const filePath = `${directoryPath}/${index}.json`
+
+    fs.ensureFileSync(filePath)
+    fs.writeJSONSync(filePath, data)
+  }
 }

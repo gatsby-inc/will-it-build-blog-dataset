@@ -1,5 +1,4 @@
-const { generateArticles } = require(`./utils/generate`)
-const { writeDataToDisk } = require(`./utils/write`)
+const { generateArticlesAndWriteToDisk } = require(`./utils/write`)
 
 exports.sourceNodes = async (helpers, pluginOptions) => {
   const { sets, generateSingleSet } = pluginOptions
@@ -19,9 +18,17 @@ exports.sourceNodes = async (helpers, pluginOptions) => {
     return
   }
 
-  for (const actionableSet of actionableSets) {
-    const [name, data] = await generateArticles(actionableSet)
+  const { reporter } = helpers
 
-    await writeDataToDisk({ name, data })
+  for (const actionableSet of actionableSets) {
+    let activity = reporter.activityTimer(
+      `Generating ${actionableSet.articles} articles for ${actionableSet.name}`
+    )
+
+    activity.start()
+
+    await generateArticlesAndWriteToDisk({ actionableSet, activity, reporter })
+
+    activity.end()
   }
 }
