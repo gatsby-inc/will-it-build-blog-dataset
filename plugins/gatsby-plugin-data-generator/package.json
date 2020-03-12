@@ -1,0 +1,11 @@
+{
+  "name": "gatsby-plugin-data-generator",
+  "version": "0.0.0",
+  "description": "A Gatsby plugin to generate dummy data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "GatsbyJS, Tyler Barnes",
+  "license": "ISC"
+}

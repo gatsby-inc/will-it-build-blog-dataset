@@ -3952,6 +3952,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+faker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
+  integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
+
 fast-deep-equal@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.1.tgz#545145077c501491e33b15ec408c294376e94ae4"
@@ -4154,7 +4159,7 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.10.0.tgz#01f5263aee921c6a54fb91667f08f4155ce169eb"
   integrity sha512-4eyLK6s6lH32nOvLLwlIOnr9zrL8Sm+OvW4pVTJNoXeGzYIkHVf+pADQi+OJ0E67hiuSLezPVPyBcIZO50TmmQ==
@@ -6083,6 +6088,11 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
 
+lodash.samplesize@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.samplesize/-/lodash.samplesize-4.2.0.tgz#460762fbb2b342290517499e90d51586db465ff9"
+  integrity sha1-Rgdi+7KzQikFF0mekNUVhttGX/k=
+
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
@@ -6481,6 +6491,13 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
+
+movies-names@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/movies-names/-/movies-names-1.1.1.tgz#00269b0f755c634dcd5f3492604cd7f9092a7114"
+  integrity sha512-TT9GoxZXJp/HeapCMLO7Urbtux6ImyrAvpxnDH6mGruNCaCanC1HGcoc/z69XfTmctvOmYmR3HJNg8VlT/XSdg==
+  dependencies:
+    unique-random-array "^2.0.0"
 
 ms@2.0.0:
   version "2.0.0"
@@ -9432,6 +9449,11 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
+tsvtojson@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tsvtojson/-/tsvtojson-1.0.1.tgz#b2cc04812e2b8f5e6ad4d537b99d8c24b0109bd3"
+  integrity sha1-sswEgS4rj15q1NU3uZ2MJLAQm9M=
+
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
@@ -9533,6 +9555,18 @@ unique-filename@^1.1.1:
   integrity sha512-Vmp0jIp2ln35UTXuryvjzkjGdRyf9b2lTXuSYUiPmzRcl3FDtYqAwOnTJkAngD9SWhnoJzDbTKwaOrZ+STtxNQ==
   dependencies:
     unique-slug "^2.0.0"
+
+unique-random-array@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/unique-random-array/-/unique-random-array-2.0.0.tgz#9e639b1a9dc141e97350a6fc6f17da4b0717b1ad"
+  integrity sha512-xR87O95fZ7hljw84J8r1YDXrvffPLWN513BNOP4Bv0KcgG5dyEUrHwsvP7mVAOKg4Y80uqRbpUk0GKr8il70qg==
+  dependencies:
+    unique-random "^2.1.0"
+
+unique-random@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/unique-random/-/unique-random-2.1.0.tgz#7a8413da5176d028567168b57125ac5c0cec5c25"
+  integrity sha512-iQ1ZgWac3b8YxGThecQFRQiqgk6xFERRwHZIWeVVsqlbmgCRl0PY13R4mUkodNgctmg5b5odG1nyW/IbOxQTqg==
 
 unique-slug@^2.0.0:
   version "2.0.2"
