@@ -10,7 +10,7 @@ module.exports = {
       options: {
         // use this option to generate a single dataset
         // otherwise it will do all of them one by one
-        // generateSingleSet: `willitbuild-03`,
+        generateSingleSet: `willitbuild-02`,
         sets: [
           {
             name: "willitbuild-01",
@@ -21,39 +21,39 @@ module.exports = {
             articles: 1024,
           },
           {
-            name: "willitbuild-02",
+            name: "willitbuild-03",
             articles: 2048,
           },
           {
-            name: "willitbuild-03",
+            name: "willitbuild-04",
             articles: 4096,
           },
           {
-            name: "willitbuild-04",
+            name: "willitbuild-05",
             articles: 8192,
           },
           {
-            name: "willitbuild-05",
+            name: "willitbuild-06",
             articles: 16384,
           },
           {
-            name: "willitbuild-06",
+            name: "willitbuild-07",
             articles: 32768,
           },
           {
-            name: "willitbuild-07",
+            name: "willitbuild-08",
             articles: 65536,
           },
           {
-            name: "willitbuild-08",
+            name: "willitbuild-09",
             articles: 131072,
           },
           {
-            name: "willitbuild-09",
+            name: "willitbuild-10",
             articles: 262144,
           },
           {
-            name: "willitbuild-10",
+            name: "willitbuild-11",
             articles: 524288,
           },
         ],
