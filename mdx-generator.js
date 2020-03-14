@@ -30,7 +30,7 @@ const fetchAndWriteImage = async ({ url, directory }) => {
       {
         retries: 5,
         onRetry: (error, attemptNumber) => {
-          if (attemptNumber === 2 || attemptNumber === 5) {
+          if (attemptNumber === 5) {
             console.log(directory)
             console.log(url)
             console.error(error)
