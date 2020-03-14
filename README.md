@@ -9,4 +9,4 @@ To regenerate a single dataset, add this plugin option to gatsby-config `generat
 
 # MDX generator
 
-To generate MDX from the generated JSON dataset, run `node ./mdx-generator.js` in this directory. MDX will be generated into an `mdx/` directory. This directory is gitignored because it would blow up the size of this repo. While generating MDX, the script also downloads images for each MDX file. If it fails partway and you restart, it will only redownload images it hasn't downloaded yet.
+To generate MDX from the generated JSON dataset, run `node ./mdx-generator.js` in this directory. MDX will be generated into an `mdx/` directory. This directory is gitignored because it would blow up the size of this repo. While generating MDX, the script also downloads images for each MDX file. If it fails partway and you restart, it will only redownload images it hasn't downloaded yet. The MDX generator uses the settings in `gatsby-config.js`, if you want to only generate a single MDX site, use the option mentioned above ☝️
