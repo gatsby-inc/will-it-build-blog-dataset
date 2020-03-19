@@ -57,6 +57,10 @@ title: "${title}"
 image: "${`./${imageFileName}`}"
 ---
 
+import { Link } from "gatsby"
+
+<Link to="/">Go Home</Link>
+
 ${content}
 `
 }
