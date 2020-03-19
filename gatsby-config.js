@@ -10,7 +10,7 @@ module.exports = {
       options: {
         // use this option to generate a single dataset
         // otherwise it will do all of them one by one
-        generateSingleSet: `willitbuild-02`,
+        // generateSingleSet: `willitbuild-01`,
         sets: [
           {
             name: "willitbuild-01",
