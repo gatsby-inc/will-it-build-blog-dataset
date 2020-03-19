@@ -1,4 +1,4 @@
-# Will it build Drupal blog export
+# Will it build blog dataset
 
 This Gatsby site uses a local plugin (`plugins/gatsby-plugin-generate-data`) to generate mass amounts of dummy data for use in testing.
 
