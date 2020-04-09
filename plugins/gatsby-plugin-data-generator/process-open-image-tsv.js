@@ -81,10 +81,18 @@ const getImageDataset = async ({
       )
     ).filter(Boolean)
 
-    verifiedCount += validImagesChunk.length
-    activity.setStatus(`[${verifiedCount} of ${imageDataSetUnverified.length}]`)
+    verifiedCount += imagesChunk.length
 
     imageDataSet = [...imageDataSet, ...validImagesChunk]
+
+    activity.setStatus(
+      `[${verifiedCount} of ${
+        imageDataSetUnverified.length
+      }] ${imagesChunk.length -
+        validImagesChunk.length} dead image links discarded, ${
+        validImagesChunk.length
+      } kept. ${imageDataSet.length} total valid url's`
+    )
 
     const filePath = `./open-image-dataset-v6/json/0-temp.json`
     fs.ensureFileSync(filePath)
