@@ -1,12 +1,5 @@
 # Will it build blog dataset
 
-This Gatsby site uses a local plugin (`plugins/gatsby-plugin-generate-data`) to generate mass amounts of dummy data for use in testing.
-
-Images are taken from the open-image-dataset-v6. Any images over 5mb are discarded, the remaining image URL's are checked to ensure the image still exists.
-
-To regenerate all data sets, run `gatsby build`.
-To regenerate a single dataset, add this plugin option to gatsby-config `generateSingleSet:`willitbuild-0X`,`
-
-# MDX generator
-
-To generate MDX from the generated JSON dataset, run `node ./mdx-generator.js` in this directory. MDX will be generated into an `mdx/` directory. This directory is gitignored because it would blow up the size of this repo. While generating MDX, the script also downloads images for each MDX file. If it fails partway and you restart, it will only redownload images it hasn't downloaded yet. The MDX generator uses the settings in `gatsby-config.js`, if you want to only generate a single MDX site, use the option mentioned above ☝️
+This repo has been replaced by the willit cli command https://github.com/gatsbyjs/will-it-generate
+It still exists here because the Drupal, Contentful, and WordPress benchmarks used this data to import. 
+Keeping it here incase we need to re-import at some point and want the same data is a good idea.
