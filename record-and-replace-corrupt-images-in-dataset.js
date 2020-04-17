@@ -12,7 +12,7 @@ const fileQueue = new Queue({ concurrency: 5 })
 
 /**
  * Originally the pregenerated dataset was generated using corrupted images.
- * This script finds and replaces any corrupt images that were discovered using the ./remove-corrup-images.js script
+ * This script finds and replaces any corrupt images using the data/broken-images.json file generated from the willit repo
  */
 ;(async () => {
   const articleFiles = await new Promise(resolve =>
